@@ -1,0 +1,23 @@
+.Keyboard {
+    width: 97%;
+    height: 62%;
+    border: 1px solid black;
+
+    margin: 0 auto;
+}
+
+.Key {
+    width: 30px;
+    height: 30px;
+
+    border: 1px solid black;
+    float: left;
+}
+
+.Key__Operand {
+    background: #D8D8D8;;
+}
+
+.Key__Operator {
+    background: #B15E5E;
+}

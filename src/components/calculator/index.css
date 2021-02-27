@@ -1,0 +1,17 @@
+:root {
+    --calculator-width: 634px;
+    --calculator-height: 678px;
+}
+
+.Calculator {
+    width: var(--calculator-width);
+    height: var(--calculator-height);
+
+    padding-top: 12px;
+
+    margin: 0 auto;
+    background: rgba(96, 87, 99, 0.594458);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(43.5943px);
+    border-radius: 4px;
+}

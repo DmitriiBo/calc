@@ -1906,6 +1906,11 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bem-cn@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/bem-cn/-/bem-cn-3.0.1.tgz#6c9e8d45d422d64f89dec16f9abd3af7fac6690b"
+  integrity sha512-kWC76a09vSk6cJXDYsH1erjxdBf856HTxl0IHOvYItSmBC6wQCsRCf9bmKR0hmeUDcUP5XPMr8MNXDgKbKJi0A==
+
 bfj@^6.1.1:
   version "6.1.2"
   resolved "https://registry.yarnpkg.com/bfj/-/bfj-6.1.2.tgz#325c861a822bcb358a41c78a33b8e6e2086dde7f"
@@ -7957,6 +7962,11 @@ vue@^2.6.11:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==
+
+vuex-simple@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vuex-simple/-/vuex-simple-2.2.0.tgz#8c0ad521942462c370848172269cd5ac72880fc3"
+  integrity sha512-4CI1merNNNZnmiK754dGFTgqjY/ToQ4tzIIG2I9f2CaueEr4aFfrbWOn7Dx2vOwr8OtEnyU3zscbE0yg2RrZjA==
 
 vuex@^3.4.0:
   version "3.6.2"

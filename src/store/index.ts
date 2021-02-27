@@ -1,15 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+import { createVuexStore } from "vuex-simple";
+import { CalculatorStore } from "@/store/store";
 
-Vue.use(Vuex)
+const instance = new CalculatorStore();
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+Vue.use(Vuex);
+
+export default createVuexStore(instance);
