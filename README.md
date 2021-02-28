@@ -14,6 +14,4 @@ yarn serve
 ```
 yarn build
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Калькулятор доступен по ссылке: https://dmitriibo.github.io/calculator-on-vuejs/
