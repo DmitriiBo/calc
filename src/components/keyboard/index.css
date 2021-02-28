@@ -1,23 +1,66 @@
 .Keyboard {
-    width: 97%;
-    height: 62%;
-    border: 1px solid black;
+  margin: 0 auto;
 
-    margin: 0 auto;
+  display: grid;
+
+  width: 100%;
+
+  grid-template-columns: 80% 20%;
+}
+
+.Numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.Operators {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.Numbers div:last-child {
+  grid-column-start: 1;
+  grid-column-end: 4;
+
+  border-radius: 0 0 3px 3px;
+}
+
+.Operators div:last-child {
+  font-weight: 800;
+
+  border-radius: 0 0 3px 0;
 }
 
 .Key {
-    width: 30px;
-    height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    border: 1px solid black;
-    float: left;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+
+  border: 1px solid #979797;
 }
 
 .Key__Operand {
-    background: #D8D8D8;;
+  color: #000;
+  background: #d8d8d8;
 }
 
 .Key__Operator {
-    background: #B15E5E;
+  color: #fff;
+  background: #b15e5e;
+}
+
+.KeyValue {
+  margin: 0;
+
+  font-size: 2em;
+
+  line-height: 21px;
+  text-align: center;
+
+  user-select: none;
 }

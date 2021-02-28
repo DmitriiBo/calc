@@ -1,8 +1,6 @@
 import { Component } from "vue-property-decorator";
 import { VueComponent } from "@/shims-vue";
 
-import "./index.css";
-
 import Key from "@/components/keyboard/Key";
 
 import styles from "./index.css?module";
@@ -14,14 +12,14 @@ export default class Keyboard extends VueComponent {
     return (
       <div class={styles.Keyboard}>
         <div class={styles.Numbers}>
-          {operands.map(operand => {
-            return <Key type={"Operand"} value={operand} />;
+          {operands.map((operand, index) => {
+            return <Key type={"Operand"} value={operand}/>;
           })}
         </div>
 
-        <div>
-          {operators.map(operator => {
-            return <Key type={"Operator"} value={operator} />;
+        <div class={styles.Operators}>
+          {operators.map((operator, index) => {
+            return <Key type={"Operator"} value={operator}/>;
           })}
         </div>
       </div>

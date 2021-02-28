@@ -3,6 +3,8 @@ import { VueComponent } from "@/shims-vue";
 
 import "./index.css";
 
+// @ts-ignore
+import classNames from "classnames";
 import styles from "./index.css?module";
 import { CalculatorStore } from "@/store/store";
 import { useStore } from "vuex-simple";
@@ -33,15 +35,15 @@ export default class Key extends VueComponent<KeyProps> {
   };
 
   render() {
-    const className =
-      this.type === "Operator" ? styles.Key__Operator : styles.Key__Operand;
+    const className = classNames({
+      [styles.Key]: true,
+      [styles.Key__Operator]: this.type === "Operator",
+      [styles.Key__Operand]: this.type === "Operand"
+    });
 
     return (
-      <div
-        class={`${styles.Key} ${className}`}
-        onclick={() => this.handleClick()}
-      >
-        {this.value}
+      <div class={className} onclick={() => this.handleClick()}>
+        <p class={styles.KeyValue}>{this.value}</p>
       </div>
     );
   }

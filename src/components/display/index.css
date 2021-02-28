@@ -1,12 +1,32 @@
 .Display {
-    height: 33%;
-    width: 85%;
+  padding: 30px 30px 0;
 
-    overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 
-    margin: 12px auto;
+  overflow: hidden;
 
-    padding-top: 20px;
+  width: 100%;
 
-    border: 1px solid black;
+  font-size: 2em;
+  text-align: right;
+
+  color: #fff;
+}
+
+.DisplayValue {
+  position: relative;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  white-space: nowrap;
+
+  user-select: none;
+}
+
+.Input {
+  position: absolute;
+  right: 0;
 }

@@ -1,5 +1,10 @@
-import { Action, Mutation, State, Getter } from "vuex-simple";
-import { AllowedSymbol, CurrentInputSymbols } from "@/types";
+import { Mutation, State, Getter } from "vuex-simple";
+import {
+  AllowedSymbol,
+  CurrentInputSymbols,
+  ExistsKeys,
+  IntermediateOperator
+} from "@/types";
 import { operators } from "@/constants";
 
 export class CalculatorStore {
@@ -7,11 +12,15 @@ export class CalculatorStore {
   private _currentInputSymbols: CurrentInputSymbols = [];
 
   @State()
-  private _calculationResult: number = 0;
+  private _calculationResult: number | undefined;
 
   @State()
   private _isCalculating: boolean = false;
 
+  @State()
+  private _incomingDigitBuffer: string = '';
+
+  // Utils
   private get lasInputSymbolIndex(): number {
     const index = this._currentInputSymbols.length - 1;
 
@@ -22,13 +31,60 @@ export class CalculatorStore {
     return this._currentInputSymbols[this.lasInputSymbolIndex];
   }
 
-  @Getter()
-  public get currentInputSymbols(): CurrentInputSymbols {
-    return this._currentInputSymbols;
+  static isIntermediateOperator(symbol: AllowedSymbol): boolean {
+    return ["+", "-"].includes(symbol as string);
+  }
+
+  private isRepeatedOperator(symbol: ExistsKeys) {
+    return this.lastInputSymbol === symbol;
+  }
+
+  private isSwitched(): boolean {
+    return this.lastInputSymbol === "+" || this.lastInputSymbol === "-";
+  }
+
+  private getSum() {
+    let result = 0;
+    let currentOperation: IntermediateOperator;
+
+    this._currentInputSymbols.forEach((symbol, index) => {
+      if (index === 0 && typeof symbol === "number") {
+        result = symbol;
+
+        return;
+      }
+
+      if (typeof symbol === "number") {
+        currentOperation === "+" ? (result += symbol) : (result -= symbol);
+
+        return;
+      }
+
+      currentOperation = symbol;
+    });
+
+    return result;
   }
 
   @Getter()
-  public get calculationResult(): number | 0 {
+  public get currentInputSymbols(): string {
+    let resultStr = "";
+
+    this._currentInputSymbols.forEach(symbol => {
+      if (CalculatorStore.isIntermediateOperator(symbol)) {
+        resultStr += ` ${symbol} `;
+
+        return;
+      }
+
+      resultStr += symbol;
+    });
+
+    return resultStr;
+  }
+
+  @Getter()
+  public get calculationResult(): number | undefined {
     return this._calculationResult;
   }
 
@@ -37,23 +93,28 @@ export class CalculatorStore {
     return this._isCalculating;
   }
 
+  @Getter()
+  public get incomingDigitBuffer(): string | undefined {
+    return this._incomingDigitBuffer;
+  }
+
   @Mutation()
   private calculate(): void {
     if (!this._currentInputSymbols.length) {
       return;
     }
 
-    if (["+", "-"].includes(this.lastInputSymbol as string)) {
+    if (CalculatorStore.isIntermediateOperator(this.lastInputSymbol)) {
       this._currentInputSymbols.splice(this.lasInputSymbolIndex);
     }
 
     this._isCalculating = true;
 
     setTimeout(() => {
-      this._calculationResult = eval(this._currentInputSymbols.join(""));
+      this._calculationResult = this.getSum();
 
       this._isCalculating = false;
-    }, 1000);
+    }, 2000);
   }
 
   @Mutation()
@@ -64,30 +125,24 @@ export class CalculatorStore {
   @Mutation()
   private clear(): void {
     this._currentInputSymbols = [];
+    this._calculationResult = undefined;
+    this._incomingDigitBuffer = '';
   }
 
   @Mutation()
-  private toggleOperation(operator: "+" | "-"): void {
+  private toggleOperation(operator: IntermediateOperator): void {
     this._currentInputSymbols.splice(this.lasInputSymbolIndex, 1, operator);
   }
 
-  private isRepeatedOperator(symbol: AllowedSymbol) {
-    return this.lastInputSymbol === symbol;
-  }
-
-  private isSwitched(): boolean {
-    return this.lastInputSymbol === "+" || this.lastInputSymbol === "-";
-  }
-
-  public handleKeyClick(key: AllowedSymbol) {
+  public handleKeyClick(key: ExistsKeys) {
     if (typeof key === "number") {
-      this.addInputSymbols(key);
+      this._incomingDigitBuffer += key.toString();
 
       return;
     }
 
     if (operators.includes(key)) {
-      if (this.isRepeatedOperator(key)) {
+      if (!this._incomingDigitBuffer && this.isRepeatedOperator(key)) {
         return;
       }
 
@@ -98,16 +153,28 @@ export class CalculatorStore {
           break;
         case "+":
         case "-":
-          if (this.isSwitched()) {
+          if (!this._incomingDigitBuffer && this.isSwitched()) {
             this.toggleOperation(key);
 
             break;
+          }
+
+          if (this._incomingDigitBuffer) {
+            this.addInputSymbols(parseInt(this._incomingDigitBuffer));
+
+            this._incomingDigitBuffer = '';
           }
 
           this.addInputSymbols(key);
 
           break;
         case "=":
+          if (this._incomingDigitBuffer) {
+            this.addInputSymbols(parseInt(this._incomingDigitBuffer));
+
+            this._incomingDigitBuffer = '';
+          }
+
           this.calculate();
 
           break;

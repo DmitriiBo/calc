@@ -1,4 +1,4 @@
-import { AllowedSymbol } from "@/types";
+import { AllowedSymbol, ExistsKeys } from "@/types";
 
-export const operators: AllowedSymbol[] = ["+", "-", "=", "C"];
-export const operands: AllowedSymbol[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+export const operators: ExistsKeys[] = ["C", "-", "+", "="];
+export const operands: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
